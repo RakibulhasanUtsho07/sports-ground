@@ -6,11 +6,12 @@ import { Check } from "@gravity-ui/icons";
 import {  FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import { DateFieldBar } from './DateField';
 import { DropdownBar } from './DropdownBar';
+import Link from 'next/link';
 
 
 
 function GroundDetailsPage({ groundDetails }) {
-    const { name, image_url, booking_count, owner_email, description, available_slots, capacity, price_per_hour, facility_type, location, } = groundDetails
+    const { name, image_url, booking_count, owner_email, description, available_slots, capacity, price_per_hour, facility_type, location,_id } = groundDetails
     console.log(groundDetails, "groundDetails")
     return (
        <div className="container mx-auto my-12 px-4 max-w-7xl">
@@ -29,9 +30,16 @@ function GroundDetailsPage({ groundDetails }) {
                                 priority
                                 alt={name} 
                             />
-                            <span className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-emerald-400 border border-slate-700/50 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                            <div className='absolute top-4 left-0 w-full flex justify-between px-5 p-2'>
+                               
+                            <Link href={`/manage-facilities/${_id}`}  className=' left-4 bg-slate-900/80 backdrop-blur-md text-emerald-400 border border-slate-700/50 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider cursor-pointer'>
+                                Manage
+                            </Link>
+                             <span className=" right-4 bg-slate-900/80 backdrop-blur-md text-emerald-400 border border-slate-700/50 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
                                 {facility_type}
+
                             </span>
+                            </div>
                         </div>
 
                        
@@ -147,7 +155,7 @@ function GroundDetailsPage({ groundDetails }) {
                         </div>
 
                        
-                        <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-bold tracking-wide h-12 text-sm rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 mt-2">
+                        <button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-bold tracking-wide h-12 text-sm rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 mt-2 btn">
                             Continue Booking
                         </button>
                     </Form>
