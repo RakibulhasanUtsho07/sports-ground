@@ -1,7 +1,22 @@
+"use client"
 import Link from 'next/link'
 import NavLink from './NavLink'
+import { authClient } from '@/lib/auth-client'
+import { useRouter } from 'next/navigation'
 
 function Navbar() {
+    const { data: session } = authClient.useSession()
+    const user = session?.user
+     const router = useRouter()
+    const handleLogout = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/login"); // router use korle
+                },
+            },
+        });
+    }
     const links = (
         <>
             <li>
@@ -53,9 +68,14 @@ function Navbar() {
                         {links}
                     </ul>
                 </div>
+                {
+                    user ?<Link href={"/login"} onClick={handleLogout}  className="navbar-end">
+                    <button className="btn bg-green-500 hover:bg-green-600 text-white border-none font-bold">logout</button>
+                </Link>:
                 <Link href={"/login"} className="navbar-end">
                     <button className="btn bg-green-500 hover:bg-green-600 text-white border-none font-bold">Login</button>
                 </Link>
+                }
             </div>
         </div>
     )
