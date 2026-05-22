@@ -20,7 +20,7 @@ function Navbar() {
                 </NavLink>
             </li>
             <li>
-                <NavLink href="/manage-facility" className="">
+                <NavLink href="/manage" className="">
                     Manage My Facilities
                 </NavLink>
             </li>

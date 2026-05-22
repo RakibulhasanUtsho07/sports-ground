@@ -1,4 +1,5 @@
 import ManageFacility from '@/components/ManageFacility'
+import ManageGroundCard from '@/components/ManageGroundCard'
 import { getGroundDetails } from '@/lib/data/data'
 import React from 'react'
 
@@ -8,7 +9,7 @@ async function ManageGround({params}) {
   console.log("id", id)
   return (
     <div>
-      <ManageFacility id={id } manageGround={manageGround}></ManageFacility>
+      <ManageGroundCard id={id} manageGround={manageGround} ></ManageGroundCard>
     </div>
   )
 }
