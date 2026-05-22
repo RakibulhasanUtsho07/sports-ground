@@ -22,7 +22,7 @@ function ManageGroundCard({ manageGround }) {
             hours = parseInt(hours, 10) + 12;
         }
         
-        // সিঙ্গেল ডিজিট হলে সামনে ০ বসানো (যেমন: 4 এর জায়গায় 04)
+      
         return `${String(hours).padStart(2, '0')}:${minutes}`;
     };
    const initialSlots = available_slots.map((slotString, index) => {

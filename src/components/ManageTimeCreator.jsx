@@ -6,24 +6,19 @@ function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
     
    
 
-    // ইনিশিয়াল স্টেট তৈরি করার সময় আপনার অ্যারে-টিকে অবজেক্টে রূপান্তর করে নিচ্ছি
    
-
-    // রিয়্যাক্ট স্টেট
-    
-    // ইনপুট চেঞ্জ হ্যান্ডলার
     const handleInputChange = (id, field, value) => {
         setTimeSlots(timeSlots.map(slot => 
             slot.id === id ? { ...slot, [field]: value } : slot
         ));
     };
 
-    // স্লট রিমুভ হ্যান্ডলার
+    
     const handleRemoveSlot = (id) => {
         setTimeSlots(timeSlots.filter(slot => slot.id !== id));
     };
 
-    // নতুন স্লট অ্যাড হ্যান্ডলার
+    
     const handleAddSlot = () => {
         const newId = timeSlots.length > 0 ? Math.max(...timeSlots.map(s => s.id)) + 1 : 1;
         setTimeSlots([...timeSlots, { id: newId, startTime: '08:00', endTime: '10:00', status: 'Regular' }]);
@@ -32,18 +27,18 @@ function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
     return (
         <div className="w-full space-y-3">
             
-            {/* ডাইনামিক স্লট লুপ */}
+          
             {timeSlots.map((slot, index) => (
                 <div 
                     key={slot.id} 
                     className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-white p-4 border border-green-200 rounded-2xl shadow-sm transition-all hover:border-slate-300"
                 >
-                    {/* Slot Number Indicator */}
+                    
                     <div className="flex items-center justify-center bg-slate-50 border border-slate-100 rounded-xl px-3 py-1.5 sm:py-2 text-xs font-bold text-slate-400 min-w-[40px]">
                         #{index + 1}
                     </div>
 
-                    {/* Start Time Container */}
+                    
                     <div className="flex-1 flex flex-col gap-1">
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-1 sm:hidden">Start Time</span>
                         <input
@@ -54,12 +49,12 @@ function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
                         />
                     </div>
 
-                    {/* To Separator */}
+                    
                     <div className="hidden sm:flex items-center justify-center text-xs font-semibold text-slate-400 px-1">
                         to
                     </div>
 
-                    {/* End Time Container */}
+                    
                     <div className="flex-1 flex flex-col gap-1">
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-1 sm:hidden">End Time</span>
                         <input
@@ -70,7 +65,7 @@ function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
                         />
                     </div>
 
-                    {/* Type Dropdown Container */}
+                    
                     <div className="w-full sm:w-36 flex flex-col gap-1">
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider pl-1 sm:hidden">Type</span>
                         <select 
@@ -83,7 +78,7 @@ function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
                         </select>
                     </div>
 
-                    {/* Remove Slot Action */}
+                  
                     <button
                         type="button"
                         onClick={() => handleRemoveSlot(slot.id)}
@@ -96,7 +91,7 @@ function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
                 </div>
             ))}
 
-            {/* নতুন স্লট অ্যাড বাটন */}
+            
             <button
                 type="button"
                 onClick={handleAddSlot}
