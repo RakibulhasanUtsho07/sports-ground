@@ -6,12 +6,13 @@ import React from 'react'
 
 async function MyBookingPage() {
   const bookingGround = await bookingGrounds()
+  console.log(bookingGround.length)
   console.log(bookingGround)
   return (
     <div >
 
       {
-        bookingGround > 0 ? <div className='container mx-auto p-5 '>
+        bookingGround.length > 0 ? <div className='container mx-auto p-5 '>
           <h2 className='text-3xl font-bold mt-15 '>My Booking Facilities</h2>
           <div className='space-y-5'>
             {
@@ -27,8 +28,8 @@ async function MyBookingPage() {
           </div>
 
         </div>
-          :
-          <EmptyBookingPage></EmptyBookingPage>
+          :<EmptyBookingPage></EmptyBookingPage>
+          
       }
     </div>
   )

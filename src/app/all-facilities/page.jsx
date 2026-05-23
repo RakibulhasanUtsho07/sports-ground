@@ -10,7 +10,9 @@ import React from 'react'
   return (
     <div className='mt-15 container mx-auto'>
         {
-          grounds > 0 ? <div>
+          grounds > 0 ? 
+        <EmptyFacility></EmptyFacility>:
+        <div>
           <h3 className='text-3xl font-bold'>All Facilities</h3>
         <div className="grid grid-cols-2 gap-10 mt-10 ">
 
@@ -24,8 +26,7 @@ import React from 'react'
             })
           }
         </div>
-        </div>:
-        <EmptyFacility></EmptyFacility>
+        </div>
         }
     </div>
   )

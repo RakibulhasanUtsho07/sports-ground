@@ -30,7 +30,7 @@ function AddFacility() {
      
     return (
        <div className="max-w-4xl mx-auto my-12 px-4">
-            {/* Page Title */}
+            
             <div className="mb-8">
                 <h2 className="text-3xl font-extrabold  tracking-tight">Add New Facility</h2>
                 <p className="text-sm mt-1">Fill in the details below to configure and launch a new sports or event facility.</p>

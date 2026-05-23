@@ -15,11 +15,16 @@ function GroundCard({ ground }) {
                     <p className='text-xl text-gray-400'>{ground.location}</p>
                     <p className='text-xn font-semibold text-green-700'>{ground.facility_type}</p>
                 </div>
-                <Link href={`facilities-details/${ground?._id}`} className='flex items-end'>
-                    <button className='text-xl btn bg-green-700 px-7 p-1 '>
-                        Book Now
-                        <span><GoArrowRight size={22} /></span></button>
-                </Link>
+                <Link 
+    href={`/facilities-details/${ground?._id}`} 
+    className="inline-flex whitespace-nowrap items-center justify-center gap-2 px-6 h-11 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-all duration-200 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 active:scale-95 group"
+>
+    <span>Book Now</span>
+    <GoArrowRight 
+        size={20} 
+        className="transition-transform duration-200 group-hover:translate-x-1" 
+    />
+</Link>
 
             </div>
         </div>

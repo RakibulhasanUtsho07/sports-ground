@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import banner from "@/assets/banner.png"
 import { Button } from '@heroui/react'
-
+import Link from 'next/link';
 function Banner() {
   return (
     <section className="container mx-auto mt-10 mb-16 px-4 md:px-0">
@@ -43,9 +43,9 @@ function Banner() {
 
           {/* Call to Action Buttons */}
           <div className="mt-8  gap-4">
-            <button className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-xl shadow-lg shadow-blue-900/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+            <Link href={"/all-facilities"} className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-xl shadow-lg shadow-blue-900/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0">
               Explore Now
-            </button>
+            </Link>
             
           </div>
 

@@ -3,11 +3,12 @@ import Link from 'next/link'
 import NavLink from './NavLink'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 function Navbar() {
     const { data: session } = authClient.useSession()
     const user = session?.user
-     const router = useRouter()
+    const router = useRouter()
     const handleLogout = async () => {
         await authClient.signOut({
             fetchOptions: {
@@ -21,7 +22,7 @@ function Navbar() {
         <>
             <li>
                 <NavLink href="/all-facilities" className="">
-                   All Facilities
+                    All Facilities
                 </NavLink>
             </li>
             <li>
@@ -69,12 +70,38 @@ function Navbar() {
                     </ul>
                 </div>
                 {
-                    user ?<Link href={"/login"} onClick={handleLogout}  className="navbar-end">
-                    <button className="btn bg-green-500 hover:bg-green-600 text-white border-none font-bold">logout</button>
-                </Link>:
-                <Link href={"/login"} className="navbar-end">
-                    <button className="btn bg-green-500 hover:bg-green-600 text-white border-none font-bold">Login</button>
-                </Link>
+                    user ? <div className='navbar-end flex gap-2'>
+                        <Link href={"/login"} onClick={handleLogout} className="">
+                            <button className="btn bg-green-500 hover:bg-green-600 text-white border-none font-bold">logout</button>
+
+                        </Link>
+                        <div className='flex gap-2 ml-2'>
+                            <div>
+                                {user?.image ? (
+                                    
+                                    <Image
+                                        className="rounded-full object-cover w-[50px] h-[50px]"
+                                        src={user.image}
+                                        width={50}
+                                        height={50}
+                                        alt={user?.name || "User"}
+                                    />
+                                ) : (
+                                    
+                                    <div className="w-[50px] h-[50px] rounded-full bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 font-bold text-xl flex items-center justify-center tracking-wider uppercase select-none">
+                                        {user?.name ? user.name.charAt(0) : "U"}
+                                    </div>
+                                )}
+                            </div>
+                            <div >
+                                <p className='font-semibold  '>{user?.name}</p>
+                                <p className='text-xn text-gray-300'>{user?.email.slice(0, 12)}...</p>
+                            </div>
+                        </div>
+                    </div> :
+                        <Link href={"/login"} className="navbar-end">
+                            <button className="btn bg-green-500 hover:bg-green-600 text-white border-none font-bold">Login</button>
+                        </Link>
                 }
             </div>
         </div>
