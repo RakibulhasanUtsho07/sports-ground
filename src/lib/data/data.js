@@ -8,3 +8,8 @@ export const getGroundDetails = async(id)=>{
     const data = res.json()
     return data
 }
+export const bookingGrounds = async()=>{
+    const res = await fetch("http://localhost:5000/bookings")
+    const data = res.json()
+    return data
+}

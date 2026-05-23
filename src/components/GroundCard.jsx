@@ -8,7 +8,7 @@ function GroundCard({ ground }) {
     console.log(ground, "single ground")
     return (
         <div className='space-y-4 shadow-md p-5 rounded-2xl'>
-            <Image className=' h-70 mx-auto  w-full rounded-2xl' src={ground.image_url} width={400} height={150} alt={ground.name} />
+            <Image className=' h-70 mx-auto  w-full rounded-2xl' src={ground?.image_url} width={400} height={150} alt={ground.name} />
             <div className='flex justify-between'>
                 <div className='space-y-3'>
                     <h3 className='text-2xl  font-bold '>{ground.name}</h3>

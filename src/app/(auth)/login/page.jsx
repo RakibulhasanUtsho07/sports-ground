@@ -22,6 +22,11 @@ function LoginPage() {
 
 
     }
+    const handleGoogleSingIn = async()=>{
+    await authClient.signIn.social({
+      provider: "google"
+    })
+  }
     return (
        <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-100 via-purple-50 to-slate-200 p-4 md:p-8">
             {/* Main Card Wrapper */}
@@ -91,8 +96,10 @@ function LoginPage() {
 
                 {/* Google Login Button */}
                 <button 
+                    
+                    onClick={handleGoogleSingIn}
                     type="button"
-                    className="w-full h-12 flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-sm rounded-2xl shadow-sm transition-all duration-200 active:scale-[0.99]"
+                    className="w-full cursor-pointer h-12 flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-sm rounded-2xl shadow-sm transition-all duration-200 active:scale-[0.99]"
                 >
                     <FcGoogle className="text-xl" />
                     Sign in with Google

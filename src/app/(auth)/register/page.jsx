@@ -20,6 +20,7 @@ function RegisterPage() {
       callbackURL: "/",
 
     })
+    
     console.log(res, error);
     if(error){
       alert(error.message)
@@ -27,8 +28,14 @@ function RegisterPage() {
     if(res){
       alert("SingUp Successfully")
     }
-
+    
   }
+   const handleGoogleSingIn = async()=>{
+      await authClient.signIn.social({
+        provider: "google"
+      })
+    }
+ 
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-100 via-purple-50 to-slate-200 p-4 md:p-8">
@@ -43,6 +50,7 @@ function RegisterPage() {
 
                 {/* Google Sign Up Button (Top Priority Alternative) */}
                 <button 
+                    onClick={handleGoogleSingIn}
                     type="button"
                     className="w-full h-12 flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-sm rounded-2xl shadow-sm transition-all duration-200 active:scale-[0.99]"
                 >
