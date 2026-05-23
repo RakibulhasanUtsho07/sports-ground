@@ -3,16 +3,49 @@
 
 import { deleteBookingData } from "@/lib/data/data";
 import { AlertDialog, Button } from "@heroui/react";
+import toast from "react-hot-toast";
 
-export function DeleteDialog({ground}) {
-        const handleCancelBooking = async()=>{
-            await deleteBookingData(ground?._id)
+export function DeleteDialog({ ground }) {
+    const handleCancelBooking = async () => {
+        try {
+            const response = await deleteBookingData(ground?._id)
+            if (response && (response.deletedCount > 0 || response.success)) {
 
+
+                toast.success('Booking Cancelled Successfully!', {
+                    duration: 3000,
+                    style: {
+                        border: '1px solid #fee2e2',
+                        padding: '16px',
+                        color: '#991b1b',
+                        background: '#fff5f5',
+                        borderRadius: '16px',
+                        fontWeight: '600',
+                        fontSize: '14px',
+                        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)',
+                    },
+                    iconTheme: {
+                        primary: '#dc2626',
+                        secondary: '#fff',
+                    },
+                });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+
+            } else {
+                toast.error('Failed to cancel booking. Try again.');
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            toast.error('Something went wrong!');
         }
-    
+
+    }
+
     return (
         <AlertDialog>
-            
+
             <AlertDialog.Trigger
                 type="button"
                 className="px-5 flex items-center justify-center h-10 md:w-full bg-red-50 hover:bg-red-100 active:bg-red-200 text-red-600 font-bold text-xs rounded-xl transition-all duration-200 border border-red-200/40 active:scale-95 cursor-pointer"
@@ -22,7 +55,7 @@ export function DeleteDialog({ground}) {
 
             <AlertDialog.Backdrop>
                 <AlertDialog.Container>
-                    
+
                     <AlertDialog.Dialog className="sm:max-w-[420px] p-6 bg-white rounded-3xl shadow-xl border border-slate-100/80">
                         <AlertDialog.CloseTrigger className="text-slate-400 hover:text-slate-600 transition-colors" />
 
@@ -34,7 +67,7 @@ export function DeleteDialog({ground}) {
                             </AlertDialog.Heading>
                         </AlertDialog.Header>
 
-                        
+
                         <AlertDialog.Body className="mt-3">
                             <p className="text-slate-600 text-sm leading-relaxed">
                                 Are you sure you want to cancel your slot for <strong className="text-slate-900">{ground._id || "this turf"}</strong>?
@@ -44,7 +77,7 @@ export function DeleteDialog({ground}) {
 
                         {/* Footer Buttons */}
                         <AlertDialog.Footer className="mt-6 flex flex-col-reverse sm:flex-row justify-end gap-2">
-                            
+
                             <Button
                                 slot="close"
                                 variant="tertiary"
@@ -53,12 +86,12 @@ export function DeleteDialog({ground}) {
                                 No, Keep it
                             </Button>
 
-                           
+
                             <Button
                                 slot="close"
                                 variant="danger"
                                 className="w-full sm:w-auto px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-red-600/10"
-                              onClick={() => handleCancelBooking()}
+                                onClick={() => handleCancelBooking()}
                             >
                                 Yes, Cancel Booking
                             </Button>
