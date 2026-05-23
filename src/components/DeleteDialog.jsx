@@ -1,8 +1,15 @@
 "use client";
 
+
+import { deleteBookingData } from "@/lib/data/data";
 import { AlertDialog, Button } from "@heroui/react";
 
-export function BookingDialog() {
+export function DeleteDialog({ground}) {
+        const handleCancelBooking = async()=>{
+            await deleteBookingData(ground?._id)
+
+        }
+    
     return (
         <AlertDialog>
             
@@ -30,7 +37,7 @@ export function BookingDialog() {
                         
                         <AlertDialog.Body className="mt-3">
                             <p className="text-slate-600 text-sm leading-relaxed">
-                                Are you sure you want to cancel your slot for <strong className="text-slate-900">{name || "this turf"}</strong>?
+                                Are you sure you want to cancel your slot for <strong className="text-slate-900">{ground._id || "this turf"}</strong>?
                                 This time slot will be instantly made available for other players. This action cannot be undone.
                             </p>
                         </AlertDialog.Body>
@@ -51,12 +58,7 @@ export function BookingDialog() {
                                 slot="close"
                                 variant="danger"
                                 className="w-full sm:w-auto px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-red-600/10"
-                                onClick={() => {
-                                   
-                                    if (typeof handleCancel === 'function') {
-                                        handleCancel(userid);
-                                    }
-                                }}
+                              onClick={() => handleCancelBooking()}
                             >
                                 Yes, Cancel Booking
                             </Button>

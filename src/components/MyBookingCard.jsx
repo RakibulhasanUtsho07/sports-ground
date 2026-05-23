@@ -2,10 +2,11 @@ import Image from 'next/image'
 import React from 'react'
 import { CiLocationOn } from 'react-icons/ci'
 import { HiOutlineCalendar, HiOutlineClock, HiOutlineUser, HiOutlineTag } from 'react-icons/hi';
-import { BookingDialog } from './DeleteDialog';
+import { DeleteDialog } from './DeleteDialog';
+
 
 function MyBookingCard({ ground }) {
-  const { image_url,facility_type, userName,duration, name, location, totalPrice, price_per_hour,departureDate,userId } = ground
+  const { _id, image_url,facility_type, userName,duration, name, location, totalPrice, price_per_hour,departureDate,userId } = ground
   console.log(name, "ground")
   return (
     <div className="max-w-5xl mx-auto mt-6 px-4">
@@ -72,7 +73,7 @@ function MyBookingCard({ ground }) {
                     </div>
 
                     {/* Action Button */}
-                    <BookingDialog></BookingDialog>
+                    <DeleteDialog ground={ground}></DeleteDialog>
                 </div>
 
             </div>
