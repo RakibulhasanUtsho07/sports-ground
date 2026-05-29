@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { IoTimeOutline, IoTrashOutline, IoAddCircleOutline } from 'react-icons/io5';
 
-function TimeCreator({setTimeSlots, timeSlots}) {
+function TimeCreator({available_slots, setAvailable_slots}) {
     
     
 
     const handleAddSlot = () => {
-        const newId = timeSlots.length > 0 ? Math.max(...timeSlots.map(s => s.id)) + 1 : 1;
-        setTimeSlots([...timeSlots, { id: newId, startTime: '08:00', endTime: '10:00', status: 'Regular' }]);
+        const newId = available_slots.length > 0 ? Math.max(...available_slots.map(s => s.id)) + 1 : 1;
+        setAvailable_slots([...available_slots, { id: newId, startTime: '08:00', endTime: '10:00', status: 'Regular' }]);
     };
 
     const handleRemoveSlot = (id) => {
-        setTimeSlots(timeSlots.filter(slot => slot.id !== id));
+        setAvailable_slots(available_slots.filter(slot => slot.id !== id));
     };
 
     const handleInputChange = (id, field, value) => {
-        setTimeSlots(timeSlots.map(slot => 
+        setAvailable_slots(available_slots.map(slot => 
             slot.id === id ? { ...slot, [field]: value } : slot
         ));
     };
-    console.log(timeSlots)
+    console.log(available_slots)
 
     return (
        
@@ -31,7 +31,7 @@ function TimeCreator({setTimeSlots, timeSlots}) {
             </div>
 
             
-            {timeSlots.map((slot) => (
+            {available_slots.map((slot) => (
                 <div 
                     key={slot.id} 
                     className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end bg-white p-4 rounded-xl border border-slate-200 shadow-sm"
@@ -74,7 +74,7 @@ function TimeCreator({setTimeSlots, timeSlots}) {
                         </div>
 
                        
-                        {timeSlots.length > 1 && (
+                        {available_slots.length > 1 && (
                             <button 
                                 type="button" 
                                 onClick={() => handleRemoveSlot(slot.id)}

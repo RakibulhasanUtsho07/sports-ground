@@ -4,48 +4,94 @@ import { FieldError, Input, Label, TextField, Select, ListBox, TextArea, Button,
 import ManageTimeCreator from "./ManageTimeCreator";
 import { patchFacility } from "@/lib/action/action";
 import { useState } from "react";
- 
+
+
 
 function ManageGroundCard({ manageGround }) {
-    const { name, image_url, booking_count, owner_email, description,  capacity, price_per_hour, facility_type, location, _id, } = manageGround
+    const { name, image_url, booking_count, owner_email, description, capacity, price_per_hour, facility_type, location, _id, } = manageGround
     const slots = manageGround.available_slots
-   const [available_slots, setAvailable_slots] = useState(slots)
+    const [formData, setFormData] = useState({
+        name: name || "",
+        image_url: image_url || "",
+        booking_count: booking_count || "",
+        owner_email: owner_email || " ",
+        description: description || "",
+        capacity: capacity || "",
+        price_per_hour: price_per_hour || "",
+        facility_type: facility_type || " ",
+        location: location || "",
+
+    })
+    const handleInputChange = (e) => {
+        if (!e || !e.target) {
+            return
+        }
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+
+
+        }))
+        if (typeof e === "string") {
+
+            setFormData((prev) => ({
+                ...prev,
+                image_url: e,
+            }));
+        }
+
+    }
+    const [timeSlots, setTimeSlots] = useState(slots)
     const convertTo24Hour = (timeStr) => {
         if (!timeStr) return "00:00";
-        const [time, modifier] = timeStr.trim().split(' ');
+        const [time, modifier] = timeStr.trim().split(' _ ');
         let [hours, minutes] = time.split(':');
-        
+
         if (hours === '12') {
             hours = '00';
         }
         if (modifier === 'PM') {
             hours = parseInt(hours, 10) + 12;
         }
-        
-      
+
+
         return `${String(hours).padStart(2, '0')}:${minutes}`;
     };
-   const initialSlots = available_slots.map((slotString, index) => {
-        const [start, end] = slotString.split(' - ');
-        return {
-            id: index + 1,
-            startTime: convertTo24Hour(start),
-            endTime: convertTo24Hour(end),
-            status: 'Regular'
-        };
-        
-    });
-    
-    const [timeSlots, setTimeSlots] = useState(initialSlots);
+    const initialSlots = timeSlots.map((slot, index) => {
+        if (typeof slot === "object" && slot !== null) {
+            return {
+                id: slot.id || index + 1,
+                startTime: slot.startTime || "00:00",
+                endTime: slot.endTime || "00:00",
+                status: slot.status || "Regular"
+            };
 
-    const onSubmit =async (e) =>{
-         e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const manageGround = Object.fromEntries(formData.entries())
-        
+        }
+        if (typeof slot === "string") {
+            const [start, end] = slot.split(' - ');
+            return {
+                id: index + 1,
+                startTime: convertTo24Hour(start),
+                endTime: convertTo24Hour(end),
+                status: 'Regular'
+            };
+        }
+
+        return { id: index + 1, startTime: "00:00", endTime: "00:00", status: "Regular" };
+    });
+
+    const [available_slots, setAvailable_slots] = useState(initialSlots);
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
+
+
         const updatedData = {
-            ...manageGround,
-            timeSlots: timeSlots
+            ...formData,
+            available_slots: available_slots,
+
 
         }
         console.log(updatedData)
@@ -54,7 +100,7 @@ function ManageGroundCard({ manageGround }) {
     }
 
     return (
-        <div className="max-w-4xl mx-auto my-12 px-4">
+        <div className="md:w-full lg:max-w-4xl mx-auto my-12 px-4">
 
             <div className="mb-8">
                 <h2 className="text-3xl font-extrabold  tracking-tight">Manage Facility</h2>
@@ -69,30 +115,30 @@ function ManageGroundCard({ manageGround }) {
                         <h3 className="text-lg font-bold text-green-500 border-b border-slate-100 pb-2">1. Ground & Facility Info</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="md:col-span-2">
-                                <TextField name="groundName" isRequired>
+                                <TextField name="name" isRequired>
                                     <Label className="text-sm font-semibold text-green-500 mb-1 block">Ground Name</Label>
-                                    <Input value={name} placeholder="Shuttle Pro Indoor Arena" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
+                                    <Input value={formData.name} onChange={handleInputChange} placeholder="Shuttle Pro Indoor Arena" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                     <FieldError />
                                 </TextField>
                             </div>
                             <div>
-                                <TextField name="facilityType" isRequired>
+                                <TextField name="facility_type" isRequired>
                                     <Label className="text-sm font-semibold text-green-500 mb-1 block">Facility Type</Label>
-                                    <Input value={facility_type} placeholder="Badminton" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
+                                    <Input value={formData.facility_type} onChange={handleInputChange} placeholder="Badminton" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                     <FieldError />
                                 </TextField>
                             </div>
                             <div className="md:col-span-2">
-                                <TextField value={location} name="location" isRequired>
+                                <TextField name="location" isRequired>
                                     <Label className="text-sm font-semibold text-green-500 mb-1 block">Location</Label>
-                                    <Input placeholder="e.g., Sector 4, Uttara, Dhaka" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
+                                    <Input value={formData.location} onChange={handleInputChange} placeholder="e.g., Sector 4, Uttara, Dhaka" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                     <FieldError />
                                 </TextField>
                             </div>
                             <div>
-                                <TextField value={owner_email} name="ownerEmail" type="email" isRequired>
+                                <TextField name="owner_email" type="email" isRequired>
                                     <Label className="text-sm font-semibold text-green-500 mb-1 block">Owner Email</Label>
-                                    <Input type="email" placeholder="owner@example.com" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
+                                    <Input value={formData.owner_email} onChange={handleInputChange} type="email" placeholder="owner@example.com" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                     <FieldError />
                                 </TextField>
                             </div>
@@ -103,27 +149,27 @@ function ManageGroundCard({ manageGround }) {
                     <div className="space-y-6">
                         <h3 className="text-lg font-bold text-green-600 border-b border-slate-100 pb-2">2. Pricing & Availability</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <TextField name="price" type="number" isRequired>
+                            <TextField name="price_per_hour" type="number" isRequired>
                                 <Label className="text-sm font-semibold text-green-500 mb-1 block">Price (USD)</Label>
-                                <Input value={price_per_hour} type="number" placeholder="1299" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
+                                <Input value={formData.price_per_hour} onChange={handleInputChange} type="number" placeholder="1299" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                 <FieldError />
                             </TextField>
 
                             <TextField name="capacity" isRequired>
                                 <Label className="text-sm font-semibold text-green-500 mb-1 block">Capacity</Label>
-                                <Input value={capacity} placeholder="e.g., 20 Players max" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
+                                <Input value={formData.capacity} onChange={handleInputChange} placeholder="e.g., 20 Players max" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                 <FieldError />
                             </TextField>
 
-                            <TextField name="departureDate" type="date" isRequired>
+                            <TextField name="departure_date" type="date" isRequired>
                                 <Label className="text-sm font-semibold text-green-500 mb-1 block">Effective Date</Label>
                                 <Input type="date" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                 <FieldError />
                             </TextField>
                             <div className="md:col-span-3">
-                                <TextField value={booking_count} name="bookingSector" isRequired>
+                                <TextField name="booking_count" isRequired>
                                     <Label className="text-sm font-semibold text-green-500 mb-1 block">Booking Sector</Label>
-                                    <Input placeholder="e.g., Sports, Corporate Events, Tournaments" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
+                                    <Input value={formData.booking_count} onChange={handleInputChange} placeholder="e.g., Sports, Corporate Events, Tournaments" className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all" />
                                     <FieldError />
                                 </TextField>
                             </div>
@@ -138,11 +184,11 @@ function ManageGroundCard({ manageGround }) {
                                 Configure Open Time Slots <span className="text-red-500">*</span>
                             </label>
 
-                           
+
                         </div>
 
-                        
-                        <ManageTimeCreator setTimeSlots={setTimeSlots} timeSlots={timeSlots} available_slots={available_slots}></ManageTimeCreator>
+
+                        <ManageTimeCreator available_slots={available_slots} setAvailable_slots={setAvailable_slots} handleInputChange={handleInputChange} formData={formData}></ManageTimeCreator>
                     </div>
 
                     {/* Section 4: Media & Description */}
@@ -152,7 +198,14 @@ function ManageGroundCard({ manageGround }) {
                             <TextField name="imageUrl" isRequired>
                                 <Label className="text-sm font-semibold text-green-500 mb-1 block">Image URL</Label>
                                 <Input
-                                    value={image_url}
+                                    value={typeof formData.image_url === 'string' ? formData.image_url : ""}
+                                    onChange={(val) => {
+                                        const textValue = (val && val.target) ? val.target.value : val;
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            image_url: textValue
+                                        }));
+                                    }}
                                     type="url"
                                     placeholder="https://example.com/facility-image.jpg"
                                     className="w-full h-11 rounded-xl border-slate-200 focus:border-cyan-500 transition-all"
@@ -160,9 +213,10 @@ function ManageGroundCard({ manageGround }) {
                                 <FieldError />
                             </TextField>
 
-                            <TextField value={description} name="description" isRequired>
+                            <TextField name="description" isRequired>
                                 <Label className="text-sm font-semibold text-green-500 mb-1 block">Description</Label>
                                 <TextArea
+                                    value={formData.description} onChange={handleInputChange}
                                     placeholder="Describe the facility features, rules, and unique selling points..."
                                     className="w-full min-h-[120px] rounded-xl border-slate-200 focus:border-cyan-500 transition-all p-3"
                                 />

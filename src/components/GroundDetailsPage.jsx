@@ -13,9 +13,10 @@ import { postBookingData } from '@/lib/action/action'
 
 
 
-function GroundDetailsPage({ groundDetails }) {
+ function GroundDetailsPage({ groundDetails }) {
     const { data: session } = authClient.useSession()
     const user = session?.user
+    
 
     const { name, image_url, booking_count, owner_email, description, available_slots, capacity, price_per_hour, facility_type, location, _id } = groundDetails
 
@@ -26,7 +27,7 @@ function GroundDetailsPage({ groundDetails }) {
     console.log(departureDate)
 
         const handleBooking = async () => {
-    // ১. তারিখ ফরম্যাটের লজিক ফাংশনের ভেতরে নিয়ে এলাম
+    
     let formattedDate = "";
     if (departureDate) {
         const day = String(departureDate.day).padStart(2, '0');

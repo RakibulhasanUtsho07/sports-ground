@@ -3,7 +3,7 @@ import React from 'react'
 
 function AddFacilityPage() {
   return (
-    <div className=' w-7xl mx-auto'>
+    <div className='w-full md:w-5xl lg:w-7xl mx-auto'>
       <AddFacility></AddFacility>
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
+function ManageTimeCreator({available_slots, setAvailable_slots}) {
   
 
     
@@ -8,27 +8,27 @@ function ManageTimeCreator({available_slots, timeSlots, setTimeSlots}) {
 
    
     const handleInputChange = (id, field, value) => {
-        setTimeSlots(timeSlots.map(slot => 
+        setAvailable_slots(available_slots.map(slot => 
             slot.id === id ? { ...slot, [field]: value } : slot
         ));
     };
 
     
     const handleRemoveSlot = (id) => {
-        setTimeSlots(timeSlots.filter(slot => slot.id !== id));
+        setAvailable_slots(available_slots.filter(slot => slot.id !== id));
     };
 
     
     const handleAddSlot = () => {
-        const newId = timeSlots.length > 0 ? Math.max(...timeSlots.map(s => s.id)) + 1 : 1;
-        setTimeSlots([...timeSlots, { id: newId, startTime: '08:00', endTime: '10:00', status: 'Regular' }]);
+        const newId = available_slots.length > 0 ? Math.max(...available_slots.map(s => s.id)) + 1 : 1;
+        setAvailable_slots([...available_slots, { id: newId, startTime: '08:00', endTime: '10:00', status: 'Regular' }]);
     };
 
     return (
         <div className="w-full space-y-3">
             
           
-            {timeSlots.map((slot, index) => (
+            {available_slots.map((slot, index) => (
                 <div 
                     key={slot.id} 
                     className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-white p-4 border border-green-200 rounded-2xl shadow-sm transition-all hover:border-slate-300"

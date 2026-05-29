@@ -2,14 +2,17 @@ import Banner from "@/components/Banner";
 import GroundCard from "@/components/GroundCard";
 
 import Navbar from "@/components/Navbar";
+import { auth } from "@/lib/auth";
 import { getGrounds } from "@/lib/data/data";
+import { headers } from "next/headers";
 import Image from "next/image";
 
 export default async function Home() {
+ 
   const grounds = await getGrounds()
-  // console.log("grounds", grounds)
+  
   const topSixGrounds = grounds.slice(0, 6)
-  // console.log(topSixGrounds)
+  
 
   return (
     <div className="container mx-auto mt-10">

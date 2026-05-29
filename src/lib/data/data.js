@@ -1,16 +1,33 @@
+
+
+
 export const getGrounds = async()=>{
     const res = await fetch("http://localhost:5000/grounds")
-    const data = res.json()
+    const data =await res.json()
     return data
 }
-export const getGroundDetails = async(id)=>{
-    const res = await fetch(`http://localhost:5000/grounds/${id}`)
-    const data = res.json()
+export const getGroundDetails = async(id, token)=>{
+    
+    
+    
+    const res = await fetch(`http://localhost:5000/grounds/${id}`,{
+        headers:{
+            authorization: `Bearer ${token} `
+        },
+        
+    })
+    const data =await res.json()
     return data
 }
-export const bookingGrounds = async()=>{
-    const res = await fetch("http://localhost:5000/bookings")
-    const data = res.json()
+export const bookingGrounds = async(token)=>{
+    console.log(token, "booking")
+    const res = await fetch("http://localhost:5000/bookings",{
+        headers:{
+            authorization: `Bearer ${token} `
+        },
+        
+    })
+    const data =await res.json()
     return data
 }
 export const deleteBookingData = async(id)=>{

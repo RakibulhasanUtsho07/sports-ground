@@ -4,8 +4,14 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/f
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from 'react-icons/hi';
 
 export default function Footer() {
+  const socialMedias = [
+                { icon: <FaFacebookF />, url: "#" },
+                { icon: <FaTwitter />, url: "#" },
+                { icon: <FaInstagram />, url: "#" },
+                { icon: <FaLinkedinIn />, url: "#" }
+              ]
   return (
-    <footer className="bg-[#0f172a] border-t border-slate-800/60 text-slate-400 font-medium">
+    <footer className="bg-[#0f172a] border-t border-slate-800/60 text-slate-400 font-medium mt-15">
       
       <div className="container mx-auto px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -23,12 +29,8 @@ export default function Footer() {
             </p>
             
             <div className="flex items-center gap-3 pt-2">
-              {[
-                { icon: <FaFacebookF />, url: "#" },
-                { icon: <FaTwitter />, url: "#" },
-                { icon: <FaInstagram />, url: "#" },
-                { icon: <FaLinkedinIn />, url: "#" }
-              ].map((social, i) => (
+              {
+              socialMedias.map((social, i) => (
                 <a 
                   key={i} 
                   href={social.url} 
